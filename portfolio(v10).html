@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Yusif Hasan — Web &amp; Robotics Engineer</title>
+  <meta name="description" content="Yusif Hasan builds web interfaces, C++ systems, and robotics software. Selected work: Signal Field, Threadline, and Orbit Logic.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚙️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      --ink: #281440;
+      --ink-deep: #1c0d30;
+      --lavender: #a99bdc;
+      --periwinkle: #7374b8;
+      --mint: #c7f2d4;
+      --paper: #f0eafb;
+      --line: rgba(216, 205, 248, 0.20);
+      --card: #32205a;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: env(safe-area-inset-top, 0px); }
+
+    body {
+      margin: 0;
+      width: 100%;
+      overflow-x: hidden;
+      font-family: "DM Sans", sans-serif;
+      background: var(--ink);
+      color: var(--paper);
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    .shell {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 87% 7%, rgba(102, 102, 173, 0.34), transparent 25%),
+        radial-gradient(circle at 13% 52%, rgba(83, 54, 127, 0.32), transparent 27%);
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-left: clamp(1.25rem, 4vw, 3.5rem);
+      padding-right: clamp(1.25rem, 4vw, 3.5rem);
+      position: relative;
+      z-index: 2;
+    }
+
+    .display { font-family: "Fraunces", serif; font-optical-sizing: auto; }
+    .mono { font-family: "JetBrains Mono", monospace; }
+
+    a { color: inherit; }
+    img, svg { max-width: 100%; }
+
+    /* ---------- header ---------- */
+    .site-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      font-family: "Fraunces", serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--paper);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: clamp(1rem, 3vw, 2rem); list-style: none; margin: 0; padding: 0; }
+
+    .nav-link {
+      color: var(--lavender);
+      font-size: 0.9rem;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: color 180ms ease, border-color 180ms ease;
+    }
+    .nav-link:hover, .nav-link:focus-visible { color: var(--mint); border-color: var(--mint); }
+
+    /* ---------- hero ---------- */
+    .hero {
+      min-height: min(88vh, 760px);
+      display: grid;
+      align-content: center;
+      padding-top: 3rem;
+      padding-bottom: 4rem;
+      position: relative;
+    }
+
+    .hero-kicker {
+      color: var(--periwinkle);
+      font-size: 0.95rem;
+      margin: 0 0 1.5rem;
+      max-width: 30ch;
+    }
+
+    .hero-title {
+      max-width: 980px;
+      margin: 0;
+      font-size: clamp(2.8rem, 7.2vw, 5.6rem);
+      line-height: 1.02;
+      letter-spacing: -0.01em;
+      font-weight: 600;
+      color: var(--paper);
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--mint);
+    }
+
+    .hero-title .rule {
+      color: var(--periwinkle);
+    }
+
+    .hero-title span {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: heroIn 800ms cubic-bezier(.2,.8,.2,1) forwards;
+    }
+    .hero-title .l2 { animation-delay: 90ms; }
+    .hero-title .l3 { animation-delay: 180ms; }
+
+    .hero-foot {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      align-items: flex-end;
+      margin-top: clamp(2.5rem, 6vw, 4rem);
+      opacity: 0;
+      transform: translateY(14px);
+      animation: heroIn 700ms 320ms cubic-bezier(.2,.8,.2,1) forwards;
+    }
+
+    .hero-copy {
+      color: #d6cdec;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      max-width: 42ch;
+      margin: 0;
+    }
+
+    .action-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: 999px;
+      padding: 0.75rem 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+      white-space: nowrap;
+    }
+    .btn:hover, .btn:focus-visible { transform: translateY(-3px); box-shadow: 0 14px 26px rgba(11, 4, 24, .32); }
+    .btn.primary { background: var(--mint); color: var(--ink-deep); }
+    .btn.secondary { border: 1px solid rgba(199,242,212,.5); color: var(--mint); }
+
+    .orbit {
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      border: 2px solid var(--mint);
+      border-radius: 50%;
+      right: 8%;
+      top: 22%;
+      opacity: .85;
+    }
+    .orbit::before {
+      content: "";
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      background: var(--mint);
+      border-radius: 50%;
+      left: -5px;
+      top: 22px;
+    }
+
+    /* ---------- shared section chrome ---------- */
+    .section {
+      padding-top: clamp(4rem, 9vw, 7rem);
+      padding-bottom: clamp(4rem, 9vw, 7rem);
+      border-top: 1px solid var(--line);
+    }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 640ms ease, transform 640ms cubic-bezier(.2,.8,.2,1); }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    .section-index {
+      font-size: 0.8rem;
+      color: var(--periwinkle);
+      margin: 0 0 0.75rem;
+    }
+
+    .section-title {
+      margin: 0;
+      color: var(--paper);
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      line-height: 1.1;
+      font-weight: 600;
+      max-width: 20ch;
+    }
+
+    /* ---------- about ---------- */
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr);
+      gap: clamp(2rem, 7vw, 6rem);
+      align-items: start;
+    }
+
+    .about-copy {
+      margin: 0;
+      color: #e5def3;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      line-height: 1.55;
+      max-width: 58ch;
+    }
+
+    .skill-list { margin-top: 2.25rem; display: flex; flex-wrap: wrap; gap: .6rem; padding: 0; list-style: none; }
+    .skill-chip {
+      border: 1px solid rgba(169,155,220,.4);
+      border-radius: 999px;
+      padding: .5rem .9rem;
+      color: var(--lavender);
+      font-size: .85rem;
+    }
+
+    /* ---------- work ---------- */
+    .work-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+    .work-note { color: var(--lavender); max-width: 32ch; font-size: .95rem; line-height: 1.5; margin: 0; }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .project-card {
+      position: relative;
+      min-height: 280px;
+      padding: 1.5rem;
+      background: var(--card);
+      border: 1px solid rgba(169,155,220,.3);
+      border-radius: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      transition: transform 200ms ease, border-color 200ms ease;
+    }
+    .project-card:hover, .project-card:focus-visible {
+      transform: translateY(-6px);
+      border-color: var(--mint);
+    }
+
+    .project-stack { color: var(--mint); font-size: .78rem; margin: 0 0 1rem; }
+    .project-name {
+      margin: 0 0 .6rem;
+      color: var(--paper);
+      font-family: "Fraunces", serif;
+      font-size: clamp(1.6rem, 3vw, 2rem);
+      font-weight: 600;
+    }
+    .project-description { color: #c9c0e2; font-size: .95rem; line-height: 1.55; max-width: 32ch; margin: 0; }
+    .card-glyph { align-self: flex-end; color: var(--periwinkle); }
+
+    /* ---------- personal ---------- */
+    .personal-intro { margin: 0 0 2.5rem; color: #e5def3; font-size: clamp(1.1rem, 2vw, 1.4rem); line-height: 1.55; max-width: 60ch; }
+
+    .hobby-list { margin: 0 0 3rem; display: flex; flex-wrap: wrap; gap: .6rem; padding: 0; list-style: none; }
+    .hobby-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      border: 1px solid rgba(169,155,220,.4);
+      border-radius: 999px;
+      padding: .55rem .95rem;
+      color: var(--lavender);
+      font-size: .9rem;
+    }
+    .hobby-chip i { color: var(--mint); }
+
+    .countdown-card {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--card);
+      border: 1px solid rgba(169,155,220,.3);
+      border-radius: 1rem;
+      padding: 1.1rem 1.5rem;
+      margin: 0 0 2.5rem;
+    }
+    .countdown-number {
+      font-family: "Fraunces", serif;
+      font-size: 2.4rem;
+      font-weight: 600;
+      color: var(--mint);
+      line-height: 1;
+    }
+    .countdown-label { color: var(--lavender); font-size: .9rem; line-height: 1.4; max-width: 26ch; }
+
+    .pc-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 1rem;
+    }
+    .pc-card {
+      background: var(--card);
+      border: 1px solid rgba(169,155,220,.3);
+      border-radius: 1rem;
+      padding: 1.75rem;
+    }
+    .pc-card.cons { border-color: rgba(199,242,212,.5); }
+    .pc-heading {
+      margin: 0 0 1.1rem;
+      font-family: "Fraunces", serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--paper);
+    }
+    .pc-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: .7rem; }
+    .pc-list li { display: flex; align-items: flex-start; gap: .6rem; color: #d6cdec; font-size: .98rem; line-height: 1.45; }
+    .pc-list i { flex-shrink: 0; margin-top: .15rem; }
+    .pc-list.pros i { color: var(--mint); }
+    .pc-list.cons i { color: var(--periwinkle); }
+    .pc-empty { color: var(--mint); font-style: italic; }
+
+    /* ---------- contact ---------- */
+    .contact-panel {
+      border: 1px solid rgba(199,242,212,.4);
+      border-radius: 1.5rem;
+      padding: clamp(2rem, 6vw, 4rem);
+      background: linear-gradient(135deg, rgba(81, 57, 119, .78), rgba(39, 21, 64, .72));
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-panel::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border: 28px solid rgba(199,242,212,.12);
+      border-radius: 50%;
+      right: -80px;
+      top: -85px;
+    }
+    .contact-content { position: relative; z-index: 1; max-width: 700px; }
+    .contact-title {
+      margin: 0;
+      color: var(--paper);
+      font-size: clamp(1.9rem, 5vw, 3.2rem);
+      font-weight: 600;
+      font-family: "Fraunces", serif;
+      line-height: 1.15;
+    }
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      margin-top: 1.75rem;
+      color: var(--mint);
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-weight: 600;
+      text-decoration-color: rgba(199,242,212,.5);
+      text-underline-offset: .3em;
+      transition: transform 180ms ease;
+    }
+    .contact-link:hover, .contact-link:focus-visible { transform: translateX(4px); }
+
+    .site-footer {
+      padding-top: 1.5rem;
+      padding-bottom: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem 1.5rem;
+      justify-content: space-between;
+      color: var(--lavender);
+      font-size: .8rem;
+    }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--mint);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    @keyframes heroIn { to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 720px) {
+      .site-header { flex-wrap: wrap; }
+      .nav-links { gap: 1rem; }
+      .hero { min-height: auto; padding-top: 4rem; }
+      .about-grid, .projects, .pc-grid { grid-template-columns: 1fr; }
+      .work-head { display: block; }
+      .work-note { margin-top: 1rem; max-width: none; }
+      .orbit { display: none; }
+    }
+
+    @media (prefers-color-scheme: light) {
+      /* This design is intentionally dark; keep it dark regardless of system theme. */
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+      .reveal, .hero-title span, .hero-foot { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="wrap">
+
+      <header class="site-header">
+        <a href="#top" class="brand">Yusif Hasan</a>
+        <nav aria-label="Primary">
+          <ul class="nav-links">
+            <li><a class="nav-link" href="#about">About</a></li>
+            <li><a class="nav-link" href="#work">Work</a></li>
+            <li><a class="nav-link" href="#personal">Personal</a></li>
+            <li><a class="nav-link" href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <main id="top">
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="orbit" aria-hidden="true"></div>
+          <p class="hero-kicker mono">Web developer. C++ / robotics engineer. Occasional troublemaker.</p>
+          <h1 id="hero-title" class="hero-title display">
+            <span>I build things that</span>
+            <span class="l2">have to <em>work</em>,</span>
+            <span class="l3">then I take them apart <span class="rule">/</span> just to see why.</span>
+          </h1>
+          <div class="hero-foot">
+            <p class="hero-copy">Pixels on one side, motors and microcontrollers on the other &mdash; and yes, I've absolutely debugged a website and a robot arm in the same afternoon. Both eventually behaved.</p>
+            <div class="action-row">
+              <a href="#work" class="btn primary">
+                <span>View work</span>
+                <i data-lucide="arrow-down-right" aria-hidden="true" style="width:16px;height:16px;"></i>
+              </a>
+              <a href="#contact" class="btn secondary">
+                <span>Get in touch</span>
+                <i data-lucide="arrow-up-right" aria-hidden="true" style="width:16px;height:16px;"></i>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section id="about" class="section reveal" aria-labelledby="about-title">
+          <div class="about-grid">
+            <div>
+              <p class="section-index mono">About</p>
+              <h2 id="about-title" class="section-title display">One brain, two very different bug reports</h2>
+            </div>
+            <div>
+              <p class="about-copy">Some days I'm nudging pixels until a layout finally stops fighting me. Other days I'm chasing a race condition through C++ on a microcontroller that has no patience for garbage collection and even less for my mistakes. Different tools, same instinct: figure out the actual constraints, then build the smallest thing that survives them. I promise it's less chaotic than it sounds &mdash; usually.</p>
+              <ul class="skill-list" aria-label="Skills">
+                <li class="skill-chip">Web development</li>
+                <li class="skill-chip">C++</li>
+                <li class="skill-chip">Robotics</li>
+                <li class="skill-chip">Embedded systems</li>
+                <li class="skill-chip">Systems design</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="work" class="section reveal" aria-labelledby="work-title">
+          <div class="work-head">
+            <div>
+              <p class="section-index mono">Selected work</p>
+              <h2 id="work-title" class="section-title display">A few things I'd defend at a dinner party</h2>
+            </div>
+            <p class="work-note">Kept it to three &mdash; one for the web side, one for the C++ side, and one where they had to shake hands.</p>
+          </div>
+
+          <div class="projects">
+            <a class="project-card" href="#contact">
+              <div>
+                <p class="project-stack mono">Web &middot; TypeScript, WebGL</p>
+                <h3 class="project-name">Signal Field</h3>
+                <p class="project-description">An interactive visualization that turns a firehose of live sensor data into something you can actually look at without squinting. Dense telemetry, made legible on purpose.</p>
+              </div>
+              <i class="card-glyph" data-lucide="sparkles" aria-hidden="true" style="width:28px;height:28px;"></i>
+            </a>
+
+            <a class="project-card" href="#contact">
+              <div>
+                <p class="project-stack mono">Systems &middot; C++17</p>
+                <h3 class="project-name">Threadline</h3>
+                <p class="project-description">A lock-free task scheduler that keeps its cool under load. Cares more about your worst-case latency than your average, which is the metric that actually bites you at 3am.</p>
+              </div>
+              <i class="card-glyph" data-lucide="braces" aria-hidden="true" style="width:28px;height:28px;"></i>
+            </a>
+
+            <a class="project-card" href="#contact">
+              <div>
+                <p class="project-stack mono">Robotics &middot; ROS2, C++</p>
+                <h3 class="project-name">Orbit Logic</h3>
+                <p class="project-description">The decision-maker for a small autonomous platform &mdash; refereeing between sensors, the planned route, and the "stop right now" override, in real time, with no do-overs.</p>
+              </div>
+              <i class="card-glyph" data-lucide="bot" aria-hidden="true" style="width:28px;height:28px;"></i>
+            </a>
+          </div>
+        </section>
+
+        <section id="personal" class="section reveal" aria-labelledby="personal-title">
+          <p class="section-index mono">Personal</p>
+          <h2 id="personal-title" class="section-title display">Off the clock</h2>
+          <p class="personal-intro">When I'm not building things that have to work, I'm usually building things that don't need to &mdash; that's most of the fun.</p>
+
+          <ul class="hobby-list" aria-label="Hobbies">
+            <li class="hobby-chip"><i data-lucide="cpu" aria-hidden="true" style="width:16px;height:16px;"></i>PC building</li>
+            <li class="hobby-chip"><i data-lucide="lightbulb" aria-hidden="true" style="width:16px;height:16px;"></i>Making stupid ideas real</li>
+            <li class="hobby-chip"><i data-lucide="compass" aria-hidden="true" style="width:16px;height:16px;"></i>Trying new things</li>
+            <li class="hobby-chip"><i data-lucide="search" aria-hidden="true" style="width:16px;height:16px;"></i>Hunting good opportunities</li>
+          </ul>
+
+          <div class="countdown-card">
+            <span class="countdown-number mono" id="birthday-countdown">&mdash;</span>
+            <span class="countdown-label">days until I celebrate being one year closer to death (a.k.a. my birthday)</span>
+          </div>
+
+          <div class="pc-grid" role="group" aria-label="Pros and cons of hiring me">
+            <div class="pc-card pros">
+              <h3 class="pc-heading">Pros of hiring me</h3>
+              <ul class="pc-list pros">
+                <li><i data-lucide="check" aria-hidden="true" style="width:18px;height:18px;"></i>Good looking (this is not up for debate)</li>
+                <li><i data-lucide="check" aria-hidden="true" style="width:18px;height:18px;"></i>I get things done</li>
+                <li><i data-lucide="check" aria-hidden="true" style="width:18px;height:18px;"></i>Genuinely funny, ask around</li>
+              </ul>
+            </div>
+            <div class="pc-card cons">
+              <h3 class="pc-heading">Cons of hiring me</h3>
+              <ul class="pc-list cons">
+                <li><i data-lucide="minus" aria-hidden="true" style="width:18px;height:18px;"></i><span class="pc-empty">There are none. I checked.</span></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" class="section reveal" aria-labelledby="contact-title">
+          <div class="contact-panel">
+            <div class="contact-content">
+              <p class="section-index mono">Contact</p>
+              <h2 id="contact-title" class="contact-title">Got something worth breaking a little, before we build it right? I'm in.</h2>
+              <a class="contact-link" href="mailto:yusifhasano@gmail.com">
+                <span>yusifhasano@gmail.com</span>
+                <i data-lucide="arrow-up-right" aria-hidden="true" style="width:18px;height:18px;"></i>
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>&copy; <span id="year"></span> Yusif Hasan</span>
+        <span>Built with care and mild caffeine dependency, on both sides of the stack.</span>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    (function () {
+      const el = document.getElementById('birthday-countdown');
+      if (!el) return;
+      const birthMonth = 2; // February
+      const birthDay = 20;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      let next = new Date(today.getFullYear(), birthMonth - 1, birthDay);
+      if (next < today) next = new Date(today.getFullYear() + 1, birthMonth - 1, birthDay);
+      const days = Math.round((next - today) / 86400000);
+      el.textContent = days;
+    })();
+
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          event.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.14 });
+      document.querySelectorAll('.reveal').forEach((item) => observer.observe(item));
+    } else {
+      document.querySelectorAll('.reveal').forEach((item) => item.classList.add('is-visible'));
+    }
+
+    if (window.lucide) lucide.createIcons();
+  </script>
+</body>
+</html>
